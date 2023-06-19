@@ -16,14 +16,28 @@
 # include <stdlib.h>
 # include <pthread.h>
 
-int	parser(char **arg);
-/*
+
 struct s_philo
 {
 	pthread_t	philo;
-	idk			right_fork;
-	idk			*left_fork;
+ 	long int		last_eat;
+	pthread_mutex_t		right_fork;
+	pthread_mutex_t		*left_fork;
 
 }	t_philo
-*/
+
+typedef struct s_data
+{
+	int				n_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				n_eat;
+	t_philo			*philo;
+	pthread_mutex_t	print;
+	pthread_mutex_t	m_eat;
+	pthread_mutex_t	dead;
+}		t_data;
+
+int	parser(char **arg);
 #endif
