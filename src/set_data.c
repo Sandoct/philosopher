@@ -7,6 +7,7 @@ t_philo *create_philo ()
 	i = -1;
 	while (++i < data->n_philo)
 	{
+		data->philo[i].seat = i + 1;
 		data->philo[i].left_fork = NULL;
 		pthread_mutex_init(&(data->philo[i].right_fork), NULL);
 		if (i == data->n_philo - 1)
