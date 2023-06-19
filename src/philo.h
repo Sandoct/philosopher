@@ -20,6 +20,7 @@
 struct s_philo
 {
 	pthread_t	philo;
+	int			seat;
  	long int		last_eat;
 	pthread_mutex_t		right_fork;
 	pthread_mutex_t		*left_fork;
