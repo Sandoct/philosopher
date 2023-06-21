@@ -17,11 +17,7 @@ int	main(int argc, char **argv)
 		return (write(2, "Error\n", 6));
 	if (parser(argv))
 		return (write(2, "Error prout\n", 11));
-/*	if (argc == 3)
-		if (philo(argv[1], argv[2], argv[3], -1))
-			return (1);
-	if (argc == 4)
-		if (philo(argv[1], argv[2], argv[3], argv[4]))
-			return (1);
-*/	return (0);
+	if (philo(argv))
+		return (1);
+	return (0);
 }
