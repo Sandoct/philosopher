@@ -21,9 +21,11 @@ struct s_philo
 {
 	pthread_t	philo;
 	int			seat;
- 	long int		last_eat;
+ 	long int		last_meal;
+	long int		day;
 	pthread_mutex_t		right_fork;
 	pthread_mutex_t		*left_fork;
+	struct s_data		data;
 
 }	t_philo
 
