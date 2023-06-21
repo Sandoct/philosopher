@@ -1,6 +1,6 @@
 #include "philo.h"
 
-t_philo *create_philo ()
+void	create_philo (t_data *data)
 {
   int	i;
 
@@ -11,15 +11,13 @@ t_philo *create_philo ()
 		data->philo[i].left_fork = NULL;
 		pthread_mutex_init(&(data->philo[i].right_fork), NULL);
 		if (i == data->n_philo - 1)
-			&data->philo[0].left_fork = data->philo[i].right_fork;
-		else
+			data->philo[0].left_fork = &data->philo[i].right_fork;
+		if (i)
 			data->philo[i].left_fork = &data->philo[i - 1].right_fork;
 	}
-	return (0);
-
 }
 
-int  set_data (char **arg)
+int  set_data (t_data data, char **arg)
 {
   pthread_mutex_init(&data->print, NULL);
   data->philo = malloc(sizeof(t_philo) * data->n_philo);
@@ -30,7 +28,9 @@ int  set_data (char **arg)
 	data->time_to_eat = ft_atoi(arg[3]);
 	data->time_to_sleep = ft_atoi(arg[4]);
   if (arg[5])
-		data->n_eat = ft_atoi(arg[5]);
+	  data->n_eat = ft_atoi(arg[5]);
+  else
+	  data->n_eat = -1;
 	if (arg[5] && data->n_eat == 0)
 		return (1);
 	return (0);
