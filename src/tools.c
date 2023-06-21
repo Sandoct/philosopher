@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gpouzet <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/21 19:14:11 by gpouzet           #+#    #+#             */
+/*   Updated: 2023/06/21 19:41:52 by gpouzet          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "philo.h"
+
 int	ft_atoi(const char *str)
 {
 	int	i;
@@ -21,7 +34,7 @@ int	ft_atoi(const char *str)
 	return (nb * sign);
 }
 
-long long	time(void)
+long long	timestamp(void)
 {
 	struct timeval	tv;
 
@@ -29,11 +42,20 @@ long long	time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
+void	my_usleep(unsigned int t)
+{
+	int	i;
+
+	i = 0;
+	while (i++ < 10)
+		usleep(t / 10);
+}
+
 void	print_mutex(t_philo *philo, char *str)
 {
 	long int	time;
 
-	pthread_mutex_lock(&(philo->info->print));
+	pthread_mutex_lock(&(philo->data.print_m));
 	time = time() - philo->info->t_start;
 	if (!philo->info->stop && time >= 0 \
 			&& time <= INT_MAX && !is_dead(philo, 0))

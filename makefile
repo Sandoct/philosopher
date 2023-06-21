@@ -6,7 +6,7 @@
 #    By: gpouzet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 09:55:43 by gpouzet           #+#    #+#              #
-#    Updated: 2023/06/01 10:35:19 by gpouzet          ###   ########.fr        #
+#    Updated: 2023/06/21 19:29:06 by gpouzet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME = philo
 
 NAMEB = philo_bonus
 
-SRC = src/main.c src/parser.c \
+SRC = src/main.c src/parser.c src/tools.c src/set_data.c src/philo.c \
 
 BNS =
 

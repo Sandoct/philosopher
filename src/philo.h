@@ -6,7 +6,7 @@
 /*   By: gpouzet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:56:28 by gpouzet           #+#    #+#             */
-/*   Updated: 2023/06/08 17:54:39 by gpouzet          ###   ########.fr       */
+/*   Updated: 2023/06/21 19:41:54 by gpouzet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@
 # include <pthread.h>
 
 
-struct s_philo
+typedef struct s_philo
 {
-	pthread_t	philo;
-	int			seat;
- 	long int		last_meal;
-	long int		day;
+	pthread_t			philo;
+	int					seat;
+ 	long int			last_meal;
+	long int			day;
 	pthread_mutex_t		right_fork;
 	pthread_mutex_t		*left_fork;
 	struct s_data		data;
 
-}	t_philo
+}	t_philo;
 
 typedef struct s_data
 {
@@ -37,10 +37,12 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				n_eat;
 	t_philo			*philo;
-	pthread_mutex_t	print;
-	pthread_mutex_t	m_eat;
-	pthread_mutex_t	dead;
+	pthread_mutex_t	print_m;
 }		t_data;
 
-int	parser(char **arg);
+int		parser(char **arg);
+/*		tools		*/
+void	my_usleep(unsigned int t);
+/*		philo		*/
+int 	 philo(char **arg);
 #endif
