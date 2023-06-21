@@ -27,6 +27,8 @@ int  set_data (t_data data, char **arg)
 	data->time_to_die = ft_atoi(arg[2]);
 	data->time_to_eat = ft_atoi(arg[3]);
 	data->time_to_sleep = ft_atoi(arg[4]);
+	data->philo[i].last_meal = 0;
+	data->philo[i].day = 0;
   if (arg[5])
 	  data->n_eat = ft_atoi(arg[5]);
   else
