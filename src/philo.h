@@ -50,6 +50,10 @@ int		ft_atoi(const char *str);
 long long	timestamp(void);
 void		my_usleep(unsigned int t);
 void		print_mutex(t_philo *philo, char *str);
+/*		set_data	*/
+void		create_philo (t_data *data);
+int  		set_data (t_data *data, char **arg);
+void		clear_data(t_info *data);
 /*		philo		*/
 int 		philo(char **arg);
 #endif
