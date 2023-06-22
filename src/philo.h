@@ -20,12 +20,12 @@
 typedef struct s_philo
 {
 	pthread_t			philo;
-	int					seat;
+	int				seat;
  	long int			last_meal;
 	long int			day;
-	pthread_mutex_t		right_fork;
-	pthread_mutex_t		*left_fork;
-	struct s_data		data;
+	pthread_mutex_t			right_fork;
+	pthread_mutex_t			*left_fork;
+	struct s_data			data;
 
 }	t_philo;
 
@@ -36,13 +36,19 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				n_eat;
-	t_philo			*philo;
-	pthread_mutex_t	print_m;
+	t_philo				*philo;
+	pthread_mutex_t			print_m;
+	pthread_mutex_t			eating;
+	pthread_mutex_t			dead;
+
 }		t_data;
 
 int		parser(char **arg);
 /*		tools		*/
-void	my_usleep(unsigned int t);
+int		ft_atoi(const char *str);
+long long	timestamp(void);
+void		my_usleep(unsigned int t);
+void		print_mutex(t_philo *philo, char *str);
 /*		philo		*/
-int 	 philo(char **arg);
+int 		philo(char **arg);
 #endif
