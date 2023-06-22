@@ -30,12 +30,12 @@ void	create_philo (t_data *data)
 
 int  set_data (t_data data, char **arg)
 {
-	pthread_mutex_init(&data->print_m, NULL);
-	pthread_mutex_init(&data->eating, NULL);
-	pthread_mutex_init(&data->dead, NULL);
 	data->philo = malloc(sizeof(t_philo) * data->n_philo);
 	if (data->philo == NULL)
 		return (1);
+	pthread_mutex_init(&data->print_m, NULL);
+	pthread_mutex_init(&data->eating, NULL);
+	pthread_mutex_init(&data->dead, NULL);
 	data->n_philo = ft_atoi(arg[1]);
 	data->time_to_die = ft_atoi(arg[2]);
 	data->time_to_eat = ft_atoi(arg[3]);
