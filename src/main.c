@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 	if (argc < 4 || argc > 5)
 		return (write(2, "Error\n", 6));
 	if (parser(argv))
-		return (write(2, "Error prout\n", 11));
+		return (write(2, "Error wrong numbers of argument\n", 11));
 	if (philo(argv))
 		return (1);
 	return (0);
