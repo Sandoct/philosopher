@@ -19,6 +19,8 @@ void	create_philo (t_data *data)
 	while (++i < data->n_philo)
 	{
 		data->philo[i].seat = i + 1;
+		data->philo[i].last_meal = 0;
+		data->philo[i].day = 0;
 		data->philo[i].left_fork = NULL;
 		pthread_mutex_init(&(data->philo[i].right_fork), NULL);
 		if (i == data->n_philo - 1)
@@ -28,7 +30,7 @@ void	create_philo (t_data *data)
 	}
 }
 
-int  set_data (t_data data, char **arg)
+int  set_data (t_data *data, char **arg)
 {
 	data->philo = malloc(sizeof(t_philo) * data->n_philo);
 	if (data->philo == NULL)
@@ -36,12 +38,11 @@ int  set_data (t_data data, char **arg)
 	pthread_mutex_init(&data->print_m, NULL);
 	pthread_mutex_init(&data->eating, NULL);
 	pthread_mutex_init(&data->dead, NULL);
+	data->died = 0;
 	data->n_philo = ft_atoi(arg[1]);
 	data->time_to_die = ft_atoi(arg[2]);
 	data->time_to_eat = ft_atoi(arg[3]);
 	data->time_to_sleep = ft_atoi(arg[4]);
-	data->philo[i].last_meal = 0;
-	data->philo[i].day = 0;
 	if (arg[5])
 		data->n_eat = ft_atoi(arg[5]);
 	else
