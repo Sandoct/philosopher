@@ -83,15 +83,17 @@ int  philo(char **arg)
 	t_data	data;
 	int	i:
 
-	if (set_data(data, arg))
+	if (set_data(&data, arg))
 		return (1);
-	create_philo(data);
+	create_philo(&data);
 	i = -1;
-	while (++i < data->n_philo)
+	while (++i < data.n_philo)
 	{
 		if (pthread_create(&data.philo[i].thread, NULL, &philo_daily_routine, &(data.philo[i])))
 			return (1);
-		else if (pthread_join(data->philo[i].thread, NULL) != 0)
+		else if (pthread_join(data.philo[i].thread, NULL) != 0)
 			return (1);
 	}
+	clear_data(&data);
+	return (0);
 }
