@@ -42,13 +42,13 @@ long long	timestamp(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	my_usleep(unsigned int t)
+void	my_usleep(int t)
 {
-	int	i;
+	long int	time;
 
-	i = 0;
-	while (i++ < 10)
-		usleep(t / 10);
+	time = timestamp();
+	while (timestamp() - time < t)
+		usleep(ms / 10);
 }
 
 void	print_mutex(t_philo *philo, char *str)
@@ -56,9 +56,9 @@ void	print_mutex(t_philo *philo, char *str)
 	long int	time;
 
 	pthread_mutex_lock(&(philo->data.print_m));
-	time = time() - philo->info->t_start;
+	time = timestamp() - philo->info->time_to_start;
 	if (!philo->info->stop && time >= 0 \
 			&& time <= INT_MAX && !is_dead(philo, 0))
-		printf("%lld %d %s", timestamp() - philo->info->t_start, philo->n, str);
-	pthread_mutex_unlock(&(philo->info->print));
+		printf("%lld %d %s", timestamp() - philo->info->time_to_start, philo->seat, str);
+	pthread_mutex_unlock(&(philo->info->print_m));
 }
