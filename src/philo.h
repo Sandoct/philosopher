@@ -36,6 +36,7 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				n_eat;
+	int				died;
 	t_philo				*philo;
 	pthread_mutex_t			print_m;
 	pthread_mutex_t			eating;
