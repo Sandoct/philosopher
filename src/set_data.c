@@ -30,7 +30,7 @@ void	create_philo (t_data *data)
 
 int  set_data (t_data data, char **arg)
 {
-  pthread_mutex_init(&data->print, NULL);
+  pthread_mutex_init(&data->print_m, NULL);
   data->philo = malloc(sizeof(t_philo) * data->n_philo);
 	if (data->philo == NULL)
 		return (1);
