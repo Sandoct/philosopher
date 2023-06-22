@@ -51,3 +51,19 @@ int  set_data (t_data *data, char **arg)
 		return (1);
 	return (0);
 }
+
+void	clear_data(t_info *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->n_philo)
+	{
+		pthread_mutex_destroy(&data->philo[i].right_fork);
+		pthread_mutex_destroy(data->philo[i].left_forkfork);
+	}
+	free(data->philo);
+	pthread_mutex_destroy(&data->print_m);
+	pthread_mutex_destroy(&data->eating);
+	pthread_mutex_destroy(&data->dead);
+}
