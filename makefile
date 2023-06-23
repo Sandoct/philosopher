@@ -6,7 +6,7 @@
 #    By: gpouzet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 09:55:43 by gpouzet           #+#    #+#              #
-#    Updated: 2023/06/21 19:29:06 by gpouzet          ###   ########.fr        #
+#    Updated: 2023/06/23 12:51:09 by gpouzet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ all: $(NAME)
 bonus: $(NAMEB)
 
 $(NAME): $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) 
+	@$(CC) $(FLAGS) $(OBJ) -lpthread -o $(NAME) 
 	@echo -n "\\r\033[2K"
 	@echo "\033[1;32m[executable created]"
 

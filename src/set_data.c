@@ -6,7 +6,7 @@
 /*   By: gpouzet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:14:35 by gpouzet           #+#    #+#             */
-/*   Updated: 2023/06/21 19:42:02 by gpouzet          ###   ########.fr       */
+/*   Updated: 2023/06/23 14:21:11 by gpouzet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -21,6 +21,7 @@ void	create_philo (t_data *data)
 		data->philo[i].seat = i + 1;
 		data->philo[i].last_meal = 0;
 		data->philo[i].day = 0;
+		data->philo[i].data = data;
 		data->philo[i].left_fork = NULL;
 		pthread_mutex_init(&(data->philo[i].right_fork), NULL);
 		if (i == data->n_philo - 1)
@@ -38,7 +39,10 @@ int  set_data (t_data *data, char **arg)
 	pthread_mutex_init(&data->print_m, NULL);
 	pthread_mutex_init(&data->eating, NULL);
 	pthread_mutex_init(&data->dead, NULL);
+	pthread_mutex_init(&data->end, NULL);
 	data->died = 0;
+	data->ended = 0;
+	data->start_time = timestamp(); 
 	data->n_philo = ft_atoi(arg[1]);
 	data->time_to_die = ft_atoi(arg[2]);
 	data->time_to_eat = ft_atoi(arg[3]);
@@ -52,7 +56,7 @@ int  set_data (t_data *data, char **arg)
 	return (0);
 }
 
-void	clear_data(t_info *data)
+void	clear_data(t_data *data)
 {
 	int	i;
 
@@ -60,7 +64,7 @@ void	clear_data(t_info *data)
 	while (++i < data->n_philo)
 	{
 		pthread_mutex_destroy(&data->philo[i].right_fork);
-		pthread_mutex_destroy(data->philo[i].left_forkfork);
+		pthread_mutex_destroy(data->philo[i].left_fork);
 	}
 	free(data->philo);
 	pthread_mutex_destroy(&data->print_m);

@@ -6,7 +6,7 @@
 /*   By: gpouzet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:14:11 by gpouzet           #+#    #+#             */
-/*   Updated: 2023/06/21 19:41:52 by gpouzet          ###   ########.fr       */
+/*   Updated: 2023/06/23 14:21:06 by gpouzet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -48,17 +48,16 @@ void	my_usleep(int t)
 
 	time = timestamp();
 	while (timestamp() - time < t)
-		usleep(ms / 10);
+		usleep(t / 10);
 }
 
 void	print_mutex(t_philo *philo, char *str)
 {
-	long int	time;
+	long long int	time;
 
-	pthread_mutex_lock(&(philo->data.print_m));
-	time = timestamp() - philo->info->time_to_start;
-	if (!philo->info->stop && time >= 0 \
-			&& time <= INT_MAX && !is_dead(philo, 0))
-		printf("%lld %d %s", timestamp() - philo->info->time_to_start, philo->seat, str);
-	pthread_mutex_unlock(&(philo->info->print_m));
+	pthread_mutex_lock(&(philo->data->print_m));
+	time = timestamp() - philo->data->start_time;
+	if (!philo->data->died && !end(philo))
+		printf("%05lld %d %s", time, philo->seat, str);
+	pthread_mutex_unlock(&(philo->data->print_m));
 }
