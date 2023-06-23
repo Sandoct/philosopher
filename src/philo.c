@@ -13,32 +13,32 @@
 
 int	is_dead(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->info->dead);
+	pthread_mutex_lock(&philo->data->dead);
 	if (philo->data.died)
 	{
-		pthread_mutex_unlock(&philo->info->dead);
+		pthread_mutex_unlock(&philo->data->dead);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->info->dead);
+	pthread_mutex_unlock(&philo->data->dead);
 	return (0);
 }
 
 void	*check_death(t_philo *philo)
 {
-	my_usleep(philo->info->time_to_die + 1);
-	pthread_mutex_lock(&philo->info->eating);
-	pthread_mutex_lock(&philo->info->dead);
-	if (!is_dead(philo) && timestamp() - philo->last_meal >= (long)(philo->info->time_to_die))
+	my_usleep(philo->data->time_to_die + 1);
+	pthread_mutex_lock(&philo->data->eating);
+	pthread_mutex_lock(&philo->data->dead);
+	if (!is_dead(philo) && timestamp() - philo->last_meal >= (long)(philo->data->time_to_die))
 	{
-		pthread_mutex_unlock(&philo->info->eating);
-		pthread_mutex_unlock(&philo->info->dead);
+		pthread_mutex_unlock(&philo->data->eating);
+		pthread_mutex_unlock(&philo->data->dead);
 		print_mutex(philo, " died\n");
-		pthread_mutex_lock(&philo->info->dead);
+		pthread_mutex_lock(&philo->data->dead);
 		philo->data.died = 1;
-		pthread_mutex_unlock(&philo->info->dead);
+		pthread_mutex_unlock(&philo->data->dead);
 	}
-	pthread_mutex_unlock(&philo->info->eating);
-	pthread_mutex_unlock(&philo->info->dead);
+	pthread_mutex_unlock(&philo->data->eating);
+	pthread_mutex_unlock(&philo->data->dead);
 	return (NULL);
 }
 
@@ -49,10 +49,10 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_lock((philo->left_fork));
 	print_mutex(philo, " has taken a fork\n");
 	print_mutex(philo, " is eating\n");
-	pthread_mutex_lock(&(philo->info->eating));
+	pthread_mutex_lock(&(philo->data->eating));
 	philo->last_meal = timestamp();
-	pthread_mutex_unlock(&(philo->info->eating));
-	usleep(philo->info->time_to_eat);
+	pthread_mutex_unlock(&(philo->data->eating));
+	usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock((philo->left_fork));
 	pthread_mutex_unlock(&(philo->right_fork));
 }
@@ -62,15 +62,15 @@ int  philo_daily_routine(t_philo *philo)
 	pthread_t	death;
 
 	if (philo->seat % 2 == 0)
-		my_usleep(philo->info->time_to_eat / 10);
+		my_usleep(philo->data->time_to_eat / 10);
 	else if (philo->seat == philo->data.n_philo)
-		my_usleep(philo->info->time_to_eat / 5);
+		my_usleep(philo->data->time_to_eat / 5);
 	while (!is_dead(philo) && !(philo->data.n_eat != -1 && philo.day < philo.data.n_eat))
 	{
 		pthread_create(&death, NULL, check_death, philo);
 		philo_eat(philo);
 		print_mutex(philo, " is sleeping\n");
-		usleep(philo->info->time_to_sleep);
+		usleep(philo->data->time_to_sleep);
 		print_mutex(philo, " is thinking\n");
 		if (philo->data.n_eat != -1)
 			philo->day++;
