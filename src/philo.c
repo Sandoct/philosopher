@@ -104,16 +104,12 @@ int  philo(char **arg)
 	create_philo(&data);
 	i = -1;
 	while (++i < data.n_philo)
-	{
 		if (pthread_create(&data.philo[i].philo, NULL, &philo_daily_routine, &(data.philo[i])))
 			return (1);
-	}
 	i = -1;
 	while (++i < data.n_philo)
-	{
 		if (pthread_join(data.philo[i].philo, NULL) != 0)
 			return (1);
-	}
 	clear_data(&data);
 	return (0);
 }
