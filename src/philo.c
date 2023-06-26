@@ -33,18 +33,18 @@ void	*check_death(void *philosophers)
 	philo = (t_philo*)philosophers;
 	usleep(philo->data->time_to_die + 1);
 	pthread_mutex_lock(&philo->data->eating);
-	pthread_mutex_lock(&philo->data->dead);
+	pthread_mutex_lock(&philo->data->end);
 	if (!end(philo) && timestamp() - philo->last_meal >= (long)(philo->data->time_to_die))
 	{
 		pthread_mutex_unlock(&philo->data->eating);
-		pthread_mutex_unlock(&philo->data->dead);
+		pthread_mutex_unlock(&philo->data->end);
 		print_mutex(philo, " died\n");
 		pthread_mutex_lock(&philo->data->dead);
 		philo->data->died = 1;
 		pthread_mutex_unlock(&philo->data->dead);
 	}
 	pthread_mutex_unlock(&philo->data->eating);
-	pthread_mutex_unlock(&philo->data->dead);
+	pthread_mutex_unlock(&philo->data->end);
 	return (NULL);
 }
 
