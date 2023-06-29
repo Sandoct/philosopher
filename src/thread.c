@@ -7,18 +7,15 @@ void	*check_death(void *philosophers)
 	philo = (t_philo*)philosophers;
 	usleep(philo->data->time_to_die + 1);
 	pthread_mutex_lock(&philo->data->eating);
-	pthread_mutex_lock(&philo->data->end);
-	if (!end(philo) && timestamp() - philo->last_meal >= (long)(philo->data->time_to_die))
+	if (!dead(philo) && timestamp() - philo->last_meal >= (long)(philo->data->time_to_die))
 	{
 		pthread_mutex_unlock(&philo->data->eating);
-		pthread_mutex_unlock(&philo->data->end);
 		print_mutex(philo, " died\n");
 		pthread_mutex_lock(&philo->data->dead);
 		philo->data->died = 1;
 		pthread_mutex_unlock(&philo->data->dead);
 	}
 	pthread_mutex_unlock(&philo->data->eating);
-	pthread_mutex_unlock(&philo->data->end);
 	return (NULL);
 }
 
@@ -47,7 +44,7 @@ void  *philo_daily_routine(void *philosophers)
 		usleep(philo->data->time_to_eat / 10);
 	else if (philo->seat == philo->data->n_philo)
 		usleep(philo->data->time_to_eat + 1);
-	while (!end(philo))
+	while (!dead(philo) && !philo->ended)
 	{
 		pthread_create(&death, NULL, check_death, philo);
 		philo_eat(philo);
@@ -55,14 +52,8 @@ void  *philo_daily_routine(void *philosophers)
 		usleep(philo->data->time_to_sleep);
 		print_mutex(philo, " is thinking\n");
 		if (philo->data->n_eat != -1)
-		{
 			if (++philo->day >= philo->data->n_eat)
-			{
-				pthread_mutex_lock(&philo->data->end);
-				philo->data->ended = 1;
-				pthread_mutex_unlock(&philo->data->end);
-			}
-		}
+				philo->ended = 1;
 		pthread_detach(death);
 	}
 	return (NULL);
