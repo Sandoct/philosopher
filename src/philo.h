@@ -60,5 +60,5 @@ int  		set_data (t_data *data, char **arg);
 void		clear_data(t_data *data);
 /*		philo		*/
 int 		philo(char **arg);
-int			end(t_philo *philo);
+int			dead(t_philo *philo);
 #endif
