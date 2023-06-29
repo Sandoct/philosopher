@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "philo.h"
 
-int	dead(t_philo philo)
+int	dead(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->dead);
 	if (philo->data->died)
