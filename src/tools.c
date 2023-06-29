@@ -57,7 +57,7 @@ void	print_mutex(t_philo *philo, char *str)
 
 	pthread_mutex_lock(&(philo->data->print_m));
 	time = timestamp() - philo->data->start_time;
-	if (!philo->data->died && !dead(philo))
+	if (!dead(philo))
 		printf("%05lld %d %s", time, philo->seat, str);
 	pthread_mutex_unlock(&(philo->data->print_m));
 }
