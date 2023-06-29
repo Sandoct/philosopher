@@ -21,6 +21,7 @@ void	create_philo (t_data *data)
 		data->philo[i].seat = i + 1;
 		data->philo[i].last_meal = 0;
 		data->philo[i].day = 0;
+		data->philo.ended = 0;
 		data->philo[i].data = data;
 		data->philo[i].left_fork = NULL;
 		pthread_mutex_init(&(data->philo[i].right_fork), NULL);
@@ -39,9 +40,7 @@ int  set_data (t_data *data, char **arg)
 	pthread_mutex_init(&data->print_m, NULL);
 	pthread_mutex_init(&data->eating, NULL);
 	pthread_mutex_init(&data->dead, NULL);
-	pthread_mutex_init(&data->end, NULL);
 	data->died = 0;
-	data->ended = 0;
 	data->start_time = timestamp(); 
 	data->n_philo = ft_atoi(arg[1]);
 	data->time_to_die = ft_atoi(arg[2]);
