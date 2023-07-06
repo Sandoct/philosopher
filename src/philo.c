@@ -6,7 +6,7 @@
 /*   By: gpouzet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:24 by gpouzet           #+#    #+#             */
-/*   Updated: 2023/07/06 16:50:27 by gpouzet          ###   ########.fr       */
+/*   Updated: 2023/07/06 16:59:35 by gpouzet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -78,7 +78,7 @@ void  *philo_daily_routine(void *philosophers)
 			philo_eat(philo);
 		else
 			usleep(philo->data->time_to_die * 1000 + 1);
-		pthread_join(death, NULL);
+		pthread_detach(death);
 		if (philo->data->n_eat != -1)
 			if (++philo->day >= philo->data->n_eat)
 				end(philo, 1);
