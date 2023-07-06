@@ -77,7 +77,8 @@ void  *philo_daily_routine(void *philosophers)
 			usleep(philo->data->time_to_die * 1000 + 1);
 		if (philo->data->n_eat != -1)
 			if (++philo->day >= philo->data->n_eat)
-				end(philo, 1);
+				if (++philo->data->n_day_end >= philo->data->n_philo)
+					end(philo, 1);
 	}
 	return (NULL);
 }
