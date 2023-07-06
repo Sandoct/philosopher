@@ -34,6 +34,7 @@ void	create_philo (t_data *data)
 int  set_data (t_data *data, char **arg)
 {
 	data->philo_end = 0;
+	data->n_day_end = 0;
 	data->start_time = timestamp(); 
 	data->n_philo = ft_atoi(arg[1]);
 	data->philo = malloc(sizeof(t_philo) * data->n_philo);
