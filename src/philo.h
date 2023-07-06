@@ -38,6 +38,7 @@ typedef struct s_data
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					n_eat;
+	int                 n_day_end;
 	int					philo_end;
 	long long int		start_time;
 	t_philo				*philo;
