@@ -6,7 +6,7 @@
 /*   By: gpouzet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:56:28 by gpouzet           #+#    #+#             */
-/*   Updated: 2023/06/23 14:21:04 by gpouzet          ###   ########.fr       */
+/*   Updated: 2023/07/06 16:35:36 by gpouzet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,28 @@
 typedef struct s_philo
 {
 	pthread_t			philo;
-	int				seat;
+	int					seat;
  	long int			last_meal;
 	long int			day;
-	int				ended;
-	pthread_mutex_t			right_fork;
-	pthread_mutex_t			*left_fork;
-	struct s_data			*data;
+	pthread_mutex_t		right_fork;
+	pthread_mutex_t		*left_fork;
+	struct s_data		*data;
 
 }	t_philo;
 
 typedef struct s_data
 {
-	int				n_philo;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				n_eat;
-	int				died;
-	long long int	start_time;
+	int					n_philo;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					n_eat;
+	int					philo_end;
+	long long int		start_time;
 	t_philo				*philo;
-	pthread_mutex_t			print_m;
-	pthread_mutex_t			eating;
-	pthread_mutex_t			dead;
+	pthread_mutex_t		print_m;
+	pthread_mutex_t		eating;
+	pthread_mutex_t		end;
 
 }		t_data;
 
@@ -60,5 +59,5 @@ int  		set_data (t_data *data, char **arg);
 void		clear_data(t_data *data);
 /*		philo		*/
 int 		philo(char **arg);
-int			dead(t_philo *philo);
+int			end(t_philo *philo, int stop);
 #endif

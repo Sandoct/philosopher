@@ -6,7 +6,7 @@
 /*   By: gpouzet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:14:11 by gpouzet           #+#    #+#             */
-/*   Updated: 2023/06/23 14:21:06 by gpouzet          ###   ########.fr       */
+/*   Updated: 2023/07/06 16:35:29 by gpouzet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -57,7 +57,7 @@ void	print_mutex(t_philo *philo, char *str)
 
 	pthread_mutex_lock(&(philo->data->print_m));
 	time = timestamp() - philo->data->start_time;
-	if (!dead(philo))
+	if (!end(philo, 0))
 		printf("%05lld %d %s", time, philo->seat, str);
 	pthread_mutex_unlock(&(philo->data->print_m));
 }

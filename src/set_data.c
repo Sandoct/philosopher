@@ -6,7 +6,7 @@
 /*   By: gpouzet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:14:35 by gpouzet           #+#    #+#             */
-/*   Updated: 2023/06/23 14:21:11 by gpouzet          ###   ########.fr       */
+/*   Updated: 2023/07/06 16:49:30 by gpouzet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -21,7 +21,6 @@ void	create_philo (t_data *data)
 		data->philo[i].seat = i + 1;
 		data->philo[i].last_meal = 0;
 		data->philo[i].day = 0;
-		data->philo.ended = 0;
 		data->philo[i].data = data;
 		data->philo[i].left_fork = NULL;
 		pthread_mutex_init(&(data->philo[i].right_fork), NULL);
@@ -34,15 +33,12 @@ void	create_philo (t_data *data)
 
 int  set_data (t_data *data, char **arg)
 {
+	data->philo_end = 0;
+	data->start_time = timestamp(); 
+	data->n_philo = ft_atoi(arg[1]);
 	data->philo = malloc(sizeof(t_philo) * data->n_philo);
 	if (data->philo == NULL)
 		return (1);
-	pthread_mutex_init(&data->print_m, NULL);
-	pthread_mutex_init(&data->eating, NULL);
-	pthread_mutex_init(&data->dead, NULL);
-	data->died = 0;
-	data->start_time = timestamp(); 
-	data->n_philo = ft_atoi(arg[1]);
 	data->time_to_die = ft_atoi(arg[2]);
 	data->time_to_eat = ft_atoi(arg[3]);
 	data->time_to_sleep = ft_atoi(arg[4]);
@@ -52,6 +48,9 @@ int  set_data (t_data *data, char **arg)
 		data->n_eat = -1;
 	if (arg[5] && data->n_eat == 0)
 		return (1);
+	pthread_mutex_init(&data->print_m, NULL);
+	pthread_mutex_init(&data->eating, NULL);
+	pthread_mutex_init(&data->end, NULL);
 	return (0);
 }
 
@@ -61,12 +60,9 @@ void	clear_data(t_data *data)
 
 	i = -1;
 	while (++i < data->n_philo)
-	{
 		pthread_mutex_destroy(&data->philo[i].right_fork);
-		pthread_mutex_destroy(data->philo[i].left_fork);
-	}
 	free(data->philo);
 	pthread_mutex_destroy(&data->print_m);
 	pthread_mutex_destroy(&data->eating);
-	pthread_mutex_destroy(&data->dead);
+	pthread_mutex_destroy(&data->end);
 }
