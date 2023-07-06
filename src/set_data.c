@@ -6,7 +6,7 @@
 /*   By: gpouzet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:14:35 by gpouzet           #+#    #+#             */
-/*   Updated: 2023/07/06 16:49:30 by gpouzet          ###   ########.fr       */
+/*   Updated: 2023/07/06 18:01:22 by gpouzet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -19,7 +19,7 @@ void	create_philo (t_data *data)
 	while (++i < data->n_philo)
 	{
 		data->philo[i].seat = i + 1;
-		data->philo[i].last_meal = 0;
+		data->philo[i].last_meal = timestamp();
 		data->philo[i].day = 0;
 		data->philo[i].data = data;
 		data->philo[i].left_fork = NULL;

@@ -6,7 +6,7 @@
 /*   By: gpouzet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:24 by gpouzet           #+#    #+#             */
-/*   Updated: 2023/07/06 16:59:35 by gpouzet          ###   ########.fr       */
+/*   Updated: 2023/07/06 17:59:41 by gpouzet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -30,7 +30,6 @@ void	*check_death(void *philosophers)
 	t_philo	*philo;
 
 	philo = (t_philo*)philosophers;
-	usleep(philo->data->time_to_die * 1000);
 	pthread_mutex_lock(&philo->data->eating);
 	if (!end(philo, 0) && timestamp() - philo->last_meal >= (long)(philo->data->time_to_die))
 	{
@@ -63,7 +62,6 @@ void	philo_eat(t_philo *philo)
 
 void  *philo_daily_routine(void *philosophers)
 {
-	pthread_t	death;
 	t_philo		*philo;
 
 	philo = (t_philo*)philosophers;
@@ -73,12 +71,10 @@ void  *philo_daily_routine(void *philosophers)
 		usleep(2000);
 	while (!end(philo, 0))
 	{
-		pthread_create(&death, NULL, check_death, philo);
 		if (philo->data->n_philo > 1)
 			philo_eat(philo);
 		else
 			usleep(philo->data->time_to_die * 1000 + 1);
-		pthread_detach(death);
 		if (philo->data->n_eat != -1)
 			if (++philo->day >= philo->data->n_eat)
 				end(philo, 1);
@@ -98,11 +94,18 @@ int  philo(char **arg)
 	while (++i < data.n_philo)
 		if (pthread_create(&data.philo[i].philo, NULL, &philo_daily_routine, &(data.philo[i])))
 			return (1);
+	while (!end(&data.philo[0], 0))
+	{
+		usleep(1000);
+		i = -1;
+		while (++i < data.n_philo)
+			check_death(&data.philo[i]);
+	}
 	i = -1;
 	while (++i < data.n_philo)
 		if (pthread_join(data.philo[i].philo, NULL) != 0)
 			return (1);
-	usleep((data.time_to_die - data.time_to_eat - data.time_to_sleep) * 1000);
+//	usleep((data.time_to_die - data.time_to_eat - data.time_to_sleep) * 1000);
 	clear_data(&data);
 	return (0);
 }
